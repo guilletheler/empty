@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<style type="text/css">
+#layout-menu_menu {
+	z-index: 9997 !important;
+}
+
+#layout-menu_menu span.ui-menuitem-text {
+	margin-left: 2px;
+}
+
+</style>
+	<h:form>
+		<ul class="nav navbar-nav">
+			<!-- NOTIFICACIONES -->
+			<li class="dropdown user user-menu hidden-xs"
+				style="width: 250px !important"><a href="#"
+				class="dropdown-toggle" data-toggle="dropdown"> <h:graphicImage
+						library="images" value="/resources/images/persona.png"
+						height="25px" style="margin-right: 10px" />#{sessionMB.currentUser.nombre}
+			</a>
+				<ul class="dropdown-menu">
+					<li class="user-header">
+						<p>
+							#{sessionMB.currentUser.nombre} <small>#{sessionMB.currentUser.detalleRoles()}</small>
+						</p>
+					</li>
+					<li class="user-footer"><h:form prependId="false">
+							<c:if test="#{sessionMB.inRole('USUARIO')}">
+								<div class="pull-left">
+									<p:link styleClass="btn btn-danger" value="Cambiar contraseña"
+										outcome="/pages/usuario/cambioPass/CambiaPass" />
+								</div>
+							</c:if>
+							<div class="pull-right">
+								<p:link href="/vacio/j_spring_security_logout" title="Logoff">
+									<i class="fa fa-sign-out fa-2x"></i>
+								</p:link>
+							</div>
+						</h:form></li>
+				</ul></li>
+
+			<li>
+				<ul>
+					<li style="margin-top:11%"><p:clock /></li>
+				</ul>
+			</li>
+
+			<li><a id="layout-setup" href="#"
+				class="#{adminConfig.controlSidebar.showOnMobile ? '':'hidden-sm hidden-xs'}"
+				data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
+
+		</ul>
+
+		<c:if test="#{sessionMB.inRole('USUARIO')}">
+			<!-- Actualiza los mensajes cada 5 minutos -->
+			<!-- <p:poll interval="350" update="cantidad_mensajes" />-->
+		</c:if>
+	</h:form>
+
+</ui:composition>

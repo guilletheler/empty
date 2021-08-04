@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Ayuda de Ctas Ctes" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="body">
+		<h1 align="center">Ayuda de vacio</h1>
+		<h2 align="center">Cuentas Corrientes</h2>
+
+		<h2>Lotería</h2>
+		En este apartado se encuentra la información que provee la <b>Lotería
+			de Santa Fe</b> y se vincula directamente
+		con las agencias y subagencias declaradas en el sistema pero no de forma directa con las cuentas corrientes.  
+		<h2>Cuentas Corrientes</h2>
+		Las cuentas corrientes son entidades que tienen un saldo asignado, si el saldo es <b>positivo</b> indica que <b>debe
+			dinero</b>, y si es <b>negativo</b> indica que <b>se le debe dinero.</b>
+		<br /> 
+		Se pueden crear cuentas corrientes para cualquier persona física o jurídica, y también se puede asociar una cuenta 
+		corriente con una subagencia accediento a la configuración de subagencias en el menú <b>Configuración->Agencias</b>.<br />
+		Para aumentar o disminuir el saldo de las cuentas corrientes se les debe asignar comprobantes. Cada comprobante 
+		puede incrementar o disminuir el saldo de la cuenta corriente al cual fué asignado según su tipo y monto.
+		<h2>Liquidaciones</h2>
+		Una liquidación de cuenta es una totalización de algunos o todos los comprobantes de una cuenta corriente en una fecha determinada. 
+		De esta forma se puede "congelar" el saldo de esa cuenta durante un tiempo y aunque se agreguen nuevos comprobantes que modifiquen el 
+		saldo la liqudación mantiene su importe.<br/>
+		Para ejemplificar un caso práctico podemos suponer que el lunes al medio día quiero preparar para cobrar a la cuenta corriente nro 1,
+		pero solo los comprobantes que se realizaron hasta el sábado inclusive excluyendo los posteriores. Al liquidar la cuenta corriente
+		da un importe X, durante el transcurso del tiempo se seguirán generando los comprobantes de liquidación de jugadas modificando el saldo
+		de la cuenta corriente pero no el de la liquidación. De esta forma cuando posteriormente quiera registrar el recibo que indica el cobro
+		de esa liquidación de cuenta corriente el importe será el mismo.<br/>
+		Cada cuenta corriente puede tener solo una liquidación de cuenta activa.  
+		<h2>Comprobantes</h2>
+		Es la entidad que al asignarse a una cuenta corriente incrementa o disminuye su saldo.<br />
+		Existen 2 clases de comprobantes: <b>Manuales</b> y <b>Liquidaciones</b>
+		<br />
+		<h4>
+			<b>Comprobantes manuales:</b>
+		</h4> 
+		Son aquellos donde en sus renglones se puede poner cualquier texto e importe.<br />
+		<h5>
+			Comprobante <b>Cargo</b>
+		</h5>
+		Comprobante generico que incrementa el saldo de la cuenta corriente, por ej. por alquiler de equipos.
+		<h5>
+			Comprobante <b>Crédito</b>
+		</h5>
+		Comprobante generico que disminuye el saldo de la cuenta corriente, por ejemplo bonificación por volumen.
+		<h5>
+			Comrpobante <b>Recibo</b>
+		</h5>
+		Comprobante que indica un cobro disminuyendo el saldo de la cuenta corriente.
+		<h4>
+			<b>Comprobantes de liquidacion:</b>
+		</h4> 
+		Son aquellos en donde sus renglones tienen una referencia a Premios o Prescriptos y no se puede modificar ni el texto ni el importe.<br />
+		Estos comprobantes pueden generarse automáticamente configurando en la cuenta corriente los filtros.  
+		<h5>
+			Comprobante <b>Liquidación de jugadas</b>
+		</h5>
+		Comprobante que hace referencia a una o varias jugadas y/o premios.
+		Estos comprobantes pueden generarse automáticamente configurando en la cuenta corriente los filtros.
+		<h5>
+			Comprobante <b>Liquidación de prescriptos</b>
+		</h5>
+		Comprobante que hace referencia a uno o varios premios prescriptos.
+		<h3>Imputaciones</h3>
+		Como cada comprobante puede aumentar o disminuir el saldo existe la necesidad de especificar el saldo de cada uno de ellos, por ejemplo
+		si existe un comprobante de liquidacion jugadas nro 1 con un importe de $1000 en algún momento existirá un comprobante recibo nro 1por $1000
+		que deje el saldo de la cuenta corriente en 0, por lo que podemos decir que se paga (o imputa) la liquidación de jugadas con el recibo.
+		Cuando los comprobantes tienen distinto importe es un poco mas complejo pero sigue la misma lógica: cuanto de un comprobante que baja el saldo
+		hace disminuir a un comprobante que sube el saldo.<br />
+		De esta manera se puede llevar el saldo individual de cada uno de los comprobantes.
+	</ui:define>
+</ui:composition>

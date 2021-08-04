@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Lista de Usuarios" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+        Personas intervinientes en el sistema.
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form>
+
+			<p:panel styleClass="card box-solid box-primary"
+				class="box box-solid box-primary">
+
+				<p:menubar>
+					<p:menuitem value="Nuevo Usuario" icon="fa fa-plus"
+						outcome="EditUsuario.xhtml">
+					</p:menuitem>
+				</p:menubar>
+
+				<p:dataTable id="datatable"
+					value="#{usuarioListController.lazyDataModel}"
+					widgetVar="usuarioTable" var="item"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
+					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
+					emptyMessage="No se encontraron elementos" paginator="true"
+					rows="20" rowsPerPageTemplate="20,50,100" lazy="true" reflow="true"
+					multiViewState="true" style="width:100%">
+
+					<f:facet name="{Exportar}">
+						<p:outputLabel value="   EXPORTAR: " />
+						<h:commandLink styleClass="tableColumnHeader"
+							title="Exportar a XLS">
+							<i class="fa fa-fw fa-file-excel-o" />
+							<p:dataExporter type="xlsx"
+								postProcessor="#{tableExporterUtilsMB.acomodaXls}"
+								target="datatable" fileName="Lista" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column headerText="Opciones" exportable="false" width="10%">
+						<p:button title="Editar" class="btn btn-success btn-xs"
+							icon="fa fa-fw fa fa-edit" outcome="EditUsuario.xhtml">
+							<f:param name="id" value="#{item.id}" />
+						</p:button>
+						<p:commandButton
+							actionListener="#{usuarioListController.borrarUsuario(item)}"
+							update="datatable" class="btn btn-danger btn-xs"
+							icon="fa fa-fw fa fa-trash-o" title="Eliminar">
+							<p:confirm header="Eliminar Usuario"
+								message="¿Está seguro de eliminar el usuario: #{item.codigo} #{item.nombre}?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column headerText="Código" sortBy="#{item.codigo}"
+						filterBy="#{item.codigo}" filterMatchMode="contains" width="10%">
+						<p:outputLabel value="#{item.codigo}" />
+					</p:column>
+
+					<p:column headerText="Nombre" sortBy="#{item.nombre}"
+						filterBy="#{item.nombre}" filterMatchMode="contains">
+						<p:outputLabel value="#{item.nombre}" />
+					</p:column>
+
+					<p:column headerText="Nombre de Usuario" sortBy="#{item.username}"
+						filterBy="#{item.username}" filterMatchMode="contains">
+						<p:outputLabel value="#{item.username}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-solid box-danger">
+				<p:commandButton value="Si" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

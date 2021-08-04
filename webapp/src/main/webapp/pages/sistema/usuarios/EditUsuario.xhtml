@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Edición de Usuario
+    </ui:define>
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{usuarioEditController.id}"
+				converter="javax.faces.Long" />
+			<!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{usuarioEditController.init()}"/>-->
+			<f:event type="preRenderView"
+				listener="#{usuarioEditController.init}" />
+		</f:metadata>
+
+		<adm:breadcrumb
+			title="#{(usuarioEditController.id == null) ? 'Nuevo Usuario' : 'Usuario '.concat(usuarioEditController.usuario.codigo).concat('-').concat(usuarioEditController.usuario.nombre)}"
+			link="/pages/sistema/usuarios/EditUsuario.xhtml?id=#{usuarioEditController.id}" />
+		<h:form id="form" prependId="false">
+			<p:focus rendered="#{usuarioEditController.id == null}" />
+
+			<p:panel class="box box-solid box-primary"
+				style="width: 100%; height: 100%">
+
+				<div class="ui-g ui-fluid" style="width: 100% !important">
+					<div class="ui-g-12 ui-md-12">
+						<div class="ui-g-12 ui-md-1">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="cod" value="Código" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:inputNumber id="cod"
+									value="#{usuarioEditController.usuario.codigo}"
+									thousandSeparator="" decimalSeparatorAlternative="."
+									decimalPlaces="0" />
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-3">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="nombre" value="Nombre" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:inputText id="nombre"
+									value="#{usuarioEditController.usuario.nombre}" />
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-2">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="nombreUsuario" value="Nombre de usuario" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:inputText id="nombreUsuario"
+									value="#{usuarioEditController.usuario.username}" />
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-2">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="pass" value="Contraseña" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:password id="pass" value="#{usuarioEditController.password}" />
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-2">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="numeroDocumento" value="Nro doc" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:inputNumber id="numeroDocumento"
+									value="#{usuarioEditController.usuario.numeroDocumento}"
+									decimalPlaces="0" thousandSeparator="">
+								</p:inputNumber>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-5">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel for="initPage" value="Página inical" />
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:inputText id="initPage"
+									value="#{usuarioEditController.usuario.initPage}" />
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12">
+							<p:tabView dynamic="true" cache="true">
+								<p:tab xmlns="http://www.w3.org/1999/xhtml" title="Roles">
+									<div class="ui-g-12 ui-md-12">
+										<p:selectManyMenu id="newUserRole" required="true"
+											value="#{usuarioEditController.usuario.roles}"
+											showCheckbox="true" converter="entityConverter"
+											style="width: 100%">
+											<f:attribute name="collectionType" value="java.util.HashSet" />
+											<f:selectItems value="#{enumsMB.roles}" />
+										</p:selectManyMenu>
+										<span class="help-block"> <p:message for="newUserRole" />
+										</span>
+									</div>
+								</p:tab>
+								<p:tab xmlns="http://www.w3.org/1999/xhtml" title="Parámetros">
+									<div class="ui-g-12 ui-md-12">
+										<pe:sheet id="parametros" widgetVar="parametros"
+											value="#{usuarioEditController.parametros}" var="row"
+											height="200" width="800" rowKey="#{row.hashCode()}"
+											showRowHeaders="true" readOnly="false">
+
+											<pe:sheetcolumn colWidth="300" headerText="Parametro"
+												readOnly="false" value="#{row.clave}" />
+
+											<pe:sheetcolumn headerText="valor" colWidth="400"
+												readOnly="false" value="#{row.valor}" />
+										</pe:sheet>
+
+									</div>
+								</p:tab>
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+
+				<p:commandButton action="#{usuarioEditController.save}"
+					value="Guardar" update="@form" styleClass="btn btn-success" />
+				<p:commandButton value="Volver"
+					action="ListUsuarios?faces-redirect=true"
+					styleClass="btn btn-primary" process="@this" immediate="true" />
+
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Si" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

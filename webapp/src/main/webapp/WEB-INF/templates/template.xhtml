@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" template="/admin.xhtml">
+
+	<ui:define name="head">
+		<title>vacio</title>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['favicon/favicon.ico']}" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['favicon/favicon-16x16.png']}" sizes="16x16" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['favicon/favicon-96x96.png']}" sizes="96x96" />
+		<link rel="manifest" href="manifest.json" />
+		<meta name="theme-color" content="#444" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<f:loadBundle var="msg" basename="vacio" />
+		<h:outputStylesheet library="css" name="vacio.css" />
+	</ui:define>
+
+	<ui:define name="logo">
+        vacio
+    </ui:define>
+
+	<ui:define name="logo-mini">
+        vacio
+    </ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="top-menu">
+		<ui:include src="/includes/top-bar.xhtml" />
+	</ui:define>
+
+	<ui:define name="content-end">
+		<h:form prependId="notificacionForm">
+			<p:growl showDetail="true" life="5000" escape="false">
+				<p:autoUpdate />
+			</p:growl>
+		</h:form>
+		<section class="content">
+			<ui:insert name="code" />
+		</section>
+	</ui:define>
+
+	<ui:define name="footer">
+		<div style="display: inline">
+			Diseño y Desarrollo <i>WilliSoft - Software</i>
+			<div class="pull-right " style="color: gray">
+				Versión:
+				<h:link id="link-stats" onclick="void(0);return false">
+					<span style="font-weight: 600">#{msg['vacio.version']}</span>
+				</h:link>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="controlsidebar-content">
+		<ui:include src="/includes/controlsidebar-tabs-content.xhtml" />
+	</ui:define>
+	
+	<ui:define name="after-wrapper">
+		<!--Agrega contenido al controlsliderbar-->
+		<!--        <h:outputScript library="js" name="prism.js" target="head"/>
+        <h:outputScript library="js" name="showcase.js" target="head"/>-->
+	</ui:define>
+
+</ui:composition>

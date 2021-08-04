@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Edición de Mensaje
+    </ui:define>
+
+	<ui:define name="body">
+	
+		<adm:breadcrumb
+			title="Cambio contraseña"
+			link="CambioPass.xhtml?id=#{cambioPassController.id}" />
+		<h:form id="form" prependId="false">
+			<p:panel class="box box-solid box-primary"
+				header="CAMBIO DE CONTRASEÑA" style="width: 100%; height: 100%">
+				<div class="ui-g ui-fluid" style="width:100% !important">
+					<div class="ui-g-12 ui-md-3">
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel for="conAct" value="CONTRASEÑA ACTUAL" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:inputText id="conAct"
+								value="#{cambioPassController.curpasswd}" type="password"
+								styleClass="form-control" placeholder="Contraseña actual"
+								autocomplete="off" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-3">
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel for="newCon1" value="NUEVA CONTRASEÑA" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:inputText id="newCon1"
+								value="#{cambioPassController.newpasswd1}" type="password"
+								styleClass="form-control" placeholder="Nueva contraseña"
+								autocomplete="off" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-3">
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel for="newCon2" value="CONFIRMAR LA CONTRASEÑA" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:inputText id="newCon2"
+								value="#{cambioPassController.newpasswd2}" type="password"
+								styleClass="form-control"
+								placeholder="Confirmación de contraseña" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-g ui-fluid" style="width:100% !important">
+					<div class="ui-g-12 ui-md-2">
+						<p:commandButton action="#{cambioPassController.save}"
+							value="Guardar" update="@form" styleClass="btn btn-success" />
+					</div>
+					<div class="ui-g-12 ui-md-2">
+						<p:commandButton value="Cancelar"
+							action="/index?faces-redirect=true"
+							styleClass="btn btn-primary" process="@this" immediate="true" />
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

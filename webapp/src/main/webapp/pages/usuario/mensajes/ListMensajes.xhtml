@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Lista de Mensajes" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+        Lista de Mensajes
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form>
+
+			<p:panel styleClass="card box-solid box-primary"
+				class="box box-solid box-primary" header="LISTADO DE MENSAJES">
+
+				<p:dataTable id="datatable"
+					value="#{mensajeListController.lazyDataModel}"
+					widgetVar="MensajeTable" var="item"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exportar}"
+					currentPageReportTemplate="{totalRecords} [ {currentPage} / {totalPages} ]"
+					emptyMessage="No se encontraron elementos" paginator="true"
+					rows="50" lazy="true" reflow="true"
+					tableStyle="width: auto; white-space: nowrap; font-size: smaller"
+					rowsPerPageTemplate="20,50,100,200,300,400,500,1000,5000,10000"
+					style="width:100%">
+
+					<f:facet name="{Exportar}">
+						<p:outputLabel value="&nbsp;&nbsp;EXPORTAR: " />
+						<h:commandLink styleClass="tableColumnHeader"
+							title="Exportar a XLS">
+							<i class="fa fa-fw fa-file-excel-o" />
+							<p:dataExporter type="xlsx" postProcessor="#{tableExporterUtilsMB.acomodaXls}" target="datatable" fileName="Lista" />
+						</h:commandLink>
+					</f:facet>
+					<f:facet name="header">
+						<div align="left">
+							<div class="row">
+								<div class="col-sm-12 col-md-3">
+									<p:commandButton action="EditMensaje?faces-redirect=true"
+										icon="fa fa-plus" iconPos="right"
+										styleClass="btn-primary btn-block" id="buttonCreate"
+										value="NUEVO MENSAJE" />
+								</div>
+							</div>
+						</div>
+					</f:facet>
+
+					<p:column headerText="Acción" exportable="false" width="6%">
+						<p:button title="Editar" class="btn btn-success btn-xs"
+							icon="fa fa-fw fa fa-edit" outcome="EditMensaje.xhtml">
+							<f:param name="id" value="#{item.id}" />
+						</p:button>
+						<p:commandButton
+							actionListener="#{mensajeListController.borrarMensaje(item)}"
+							update="datatable" class="btn btn-danger btn-xs"
+							icon="fa fa-fw fa fa-trash-o" title="Eliminar">
+							<p:confirm header="Eliminar Mensaje"
+								message="¿Está seguro de eliminar la entidad?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column headerText="id" sortBy="#{item.id}"
+						filterBy="#{item.id}" filterMatchMode="contains">
+						<p:outputLabel value="#{item.id}" />
+					</p:column>
+					<p:column headerText="Fecha" sortBy="#{item.fecha}"
+						filterBy="#{item.fecha}" filterMatchMode="contains">
+						<p:outputLabel value="#{item.fecha}" >
+							<f:convertDateTime timeZone="America/Buenos_Aires" pattern="dd/MM/yyyy HH:mm" />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="asunto" sortBy="#{item.asunto}"
+						filterBy="#{item.asunto}" filterMatchMode="contains" width="40%">
+						<p:outputLabel value="#{item.asunto}" />
+					</p:column>
+					<p:column headerText="fechaValidez" sortBy="#{item.fechaValidez}"
+						filterBy="#{item.fechaValidez}" filterMatchMode="contains">
+						<p:outputLabel value="#{item.fechaValidez}" >
+							<f:convertDateTime timeZone="America/Buenos_Aires" pattern="dd/MM/yyyy HH:mm" />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="estado" sortBy="#{item.estado}"
+						filterBy="#{item.estado}" filterMatchMode="contains" >
+						<p:outputLabel value="#{item.estado.descripcion}" />
+					</p:column>
+					<p:column headerText="remitente" sortBy="#{item.remitente}"
+						filterBy="#{item.remitente}" filterMatchMode="contains" >
+						<p:outputLabel value="#{item.remitente.nombre}" />
+					</p:column>
+					<p:column headerText="destinatario" sortBy="#{item.destinatario}"
+						filterBy="#{item.destinatario}" filterMatchMode="contains" >
+						<p:outputLabel value="#{item.destinatario.nombre}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-solid box-danger">
+				<p:commandButton value="Si" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

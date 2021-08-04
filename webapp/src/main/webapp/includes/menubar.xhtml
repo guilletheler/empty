@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ul class="nav navbar-nav">
+		<ui:fragment rendered="#{sessionMB.inRole('SYSADMIN')}">
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Configuracion<span class="caret"></span></a>
+				<ul class="dropdown-menu multi-level" role="menu">
+					<ui:include src="mnuConfiguracion.xhtml" />
+				</ul></li>
+		</ui:fragment>
+		<ui:fragment rendered="#{sessionMB.inRole('USUARIO')}">
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Usuario<span class="caret"></span></a>
+				<ul class="dropdown-menu multi-level" role="menu">
+					<ui:include src="mnuUsuarios.xhtml" />
+				</ul></li>
+		</ui:fragment>
+		<ui:fragment rendered="#{sessionMB.inRole('AYUDA')}">
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Ayuda<span class="caret"></span></a>
+				<ul class="dropdown-menu multi-level" role="menu">
+					<ui:include src="mnuAyuda.xhtml" />
+				</ul></li>
+		</ui:fragment>
+		
+
+	</ul>
+
+
+</ui:composition>

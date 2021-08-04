@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Edición de Mensaje
+    </ui:define>
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{mensajeEditController.id}"
+				converter="javax.faces.Long" />
+			<!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{mensajeEditController.init()}"/>-->
+			<f:event type="preRenderView"
+				listener="#{mensajeEditController.init}" />
+		</f:metadata>
+
+		<adm:breadcrumb
+			title="#{(mensajeEditController.id == null) ? 'Nuevo Mensaje' : 'Mensaje '.concat(mensajeEditController.id)}"
+			link="/pages/usuario/mensajes/EditMensaje.xhtml?id=#{mensajeEditController.id}" />
+		<h:form id="form" prependId="false">
+			<p:focus rendered="#{mensajeEditController.id == null}" />
+
+			<p:panel class="box box-solid box-primary"
+				header="CREANDO/EDITANDO UN MENSAJE"
+				style="width: 100%; height: 100%">
+
+				<div class="ui-g ui-fluid" style="width:100% !important">
+					<div class="ui-g-12 ui-md-6">
+						<div class="ui-sm-12 ui-g-12">
+							<p:outputLabel value="Fecha" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel value="#{mensajeEditController.mensaje.fecha}">
+								<f:convertDateTime timeZone="America/Buenos_Aires" pattern="dd/MM/yyyy HH:mm" />
+							</p:outputLabel>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-6">
+						<div class="ui-sm-12 ui-g-12">
+							<p:outputLabel for="asunto" value="ASUNTO" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:inputText id="asunto"
+								disabled="#{mensajeEditController.readOnly}"
+								value="#{mensajeEditController.mensaje.asunto}" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-6">
+						<div class="ui-sm-12 ui-g-12">
+							<p:outputLabel for="fechaValidez" value="FECHAVALIDEZ"
+								disabled="#{mensajeEditController.readOnly}" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:calendar id="fechaValidez"
+								disabled="#{mensajeEditController.readOnly}"
+								value="#{mensajeEditController.mensaje.fechaValidez}"
+								locale="es" navigator="true" pattern="dd/MM/yyyy HH:mm"
+								showOn="button">
+							</p:calendar>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-6">
+						<div class="ui-sm-12 ui-g-12">
+							<p:outputLabel for="estado" value="ESTADO" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:selectOneMenu id="estado"
+								disabled="#{mensajeEditController.readOnly}"
+								value="#{mensajeEditController.mensaje.estado}"
+								style="width:100%" filter="true" filterMatchMode="contains"
+								styleClass="selectOneMenu">
+								<f:selectItem itemLabel="Seleccione una opción"
+									itemValue="#{null}" />
+								<f:selectItems value="#{enumsMB.estadoMensaje}" var="itemE"
+									itemLabel="#{itemE.descripcion}" itemValue="#{itemE}" />
+							</p:selectOneMenu>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-6">
+						<div class="ui-sm-12 ui-g-12">
+							<p:outputLabel for="destinatario" value="DESTINATARIO" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:selectOneMenu id="destinatario"
+								disabled="#{mensajeEditController.readOnly}"
+								value="#{mensajeEditController.mensaje.destinatario}"
+								style="width:100%" filter="true"
+								filterMatchMode="contains" styleClass="selectOneMenu">
+								<f:selectItem itemLabel="Seleccione una opción"
+									itemValue="#{null}" />
+								<f:selectItems value="#{usuarioRepo.findAll()}" var="itemE"
+									itemLabel="#{itemE.etiqueta}" itemValue="#{itemE}" />
+							</p:selectOneMenu>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-12">
+							<p:outputLabel for="mensaje" value="MENSAJE" />
+						</div>
+						<div class="ui-g-12">
+							<p:editor id="mensaje"
+								disabled="#{mensajeEditController.readOnly}"
+								value="#{mensajeEditController.mensaje.mensaje}" />
+						</div>
+					</div>
+				</div>
+				<div class="ui-g ui-fluid" style="width:100% !important">
+					<div class="ui-g-12 ui-md-2">
+						<p:commandButton action="#{mensajeEditController.save}"
+							value="Guardar" update="@form" styleClass="btn btn-success" />
+					</div>
+					<div class="ui-g-12 ui-md-2">
+						<p:commandButton value="Cancelar"
+							action="ListMensajes?faces-redirect=true"
+							styleClass="btn btn-primary" process="@this" immediate="true" />
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
