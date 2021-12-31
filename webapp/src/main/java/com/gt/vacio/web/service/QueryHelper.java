@@ -20,7 +20,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.gt.vacio.web.util.Utils;
+import com.gt.toolbox.spb.webapps.commons.infra.utils.Utils;
 
 public class QueryHelper {
 

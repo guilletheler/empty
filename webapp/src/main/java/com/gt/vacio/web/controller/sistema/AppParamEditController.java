@@ -1,7 +1,7 @@
 package com.gt.vacio.web.controller.sistema;
 
 import static com.github.adminfaces.template.util.Assert.has;
-import static com.gt.vacio.web.util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import org.omnifaces.util.Faces;
 import com.github.adminfaces.template.exception.AccessDeniedException;
 import com.gt.vacio.web.model.sistema.AppParam;
 import com.gt.vacio.web.service.sistema.AppParamService;
-import com.gt.vacio.web.util.Utils;
+import com.gt.toolbox.spb.webapps.commons.infra.utils.Utils;
 
 import lombok.Getter;
 import lombok.Setter;

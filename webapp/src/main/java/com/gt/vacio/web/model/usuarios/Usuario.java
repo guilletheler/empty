@@ -33,9 +33,9 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWithIntegerId;
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWithObservaciones;
 import com.gt.vacio.web.model.CodigoNombre;
-import com.gt.vacio.web.model.IWithIntegerId;
-import com.gt.vacio.web.model.IWithObservaciones;
 
 import lombok.AccessLevel;
 import lombok.Data;

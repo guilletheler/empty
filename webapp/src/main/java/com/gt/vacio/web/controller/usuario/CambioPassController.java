@@ -1,6 +1,6 @@
 package com.gt.vacio.web.controller.usuario;
 
-import static com.gt.vacio.web.util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 
 import java.io.Serializable;
 import java.util.Objects;

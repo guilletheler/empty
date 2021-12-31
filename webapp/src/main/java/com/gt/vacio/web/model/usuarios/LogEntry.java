@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
-import com.gt.vacio.web.model.IWithIntegerId;
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWithIntegerId;
 
 import lombok.Data;
 

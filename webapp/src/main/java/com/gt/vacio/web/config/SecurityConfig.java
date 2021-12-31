@@ -10,6 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.gt.vacio.web.CustomAuthenticationProvider;
 import com.gt.vacio.web.model.usuarios.UserRol;
 
@@ -58,19 +64,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		seguridad = seguridad.antMatchers("/", "/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
 				.permitAll();
-		
-		seguridad = seguridad.antMatchers("/pages/sistema/**").hasRole(UserRol.SYSADMIN.name());
-		
-		seguridad = seguridad.antMatchers("/pages/tecnico/**").hasAnyRole(UserRol.TECNICO.name(),
-				UserRol.TECNICO.name());
-		
-		seguridad = seguridad.antMatchers("/pages/cliente/**").hasAnyRole(UserRol.CLIENTE.name());
-		
-		seguridad = seguridad.antMatchers("/pages/usuario/**").hasAnyRole(UserRol.USUARIO.name(),
-				UserRol.SYSADMIN.name());
-		
-		seguridad = seguridad.antMatchers("/pages/ayuda/**").hasAnyRole(UserRol.AYUDA.name(), UserRol.SYSADMIN.name());
-		
+
+		seguridad = seguridad.antMatchers("/", "/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
+				.permitAll();
+
+		seguridad = seguridad.antMatchers("/resources/images/**")
+				.permitAll();
+
+		for (Map.Entry<String, Set<String>> folderPerm : UserRol.getPermissionsMap().entrySet()) {
+
+			String[] perms = folderPerm.getValue().toArray(new String[] {});
+
+			Logger.getLogger(getClass().getName()).log(Level.INFO, "permitiendo acceso a '" + folderPerm.getKey()
+					+ " para " + Arrays.toString(perms));
+			seguridad = seguridad.antMatchers(folderPerm.getKey()).hasAnyRole(perms);
+		}
+
 		seguridad.anyRequest().fullyAuthenticated().and()
 				.formLogin().loginPage("/login.xhtml").successHandler(myAuthenticationSuccessHandler)
 				.failureUrl("/login.xhtml?authfailed=true").permitAll().and()

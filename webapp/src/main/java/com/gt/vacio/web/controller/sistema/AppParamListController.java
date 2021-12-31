@@ -1,6 +1,6 @@
 package com.gt.vacio.web.controller.sistema;
 
-import static com.gt.vacio.web.util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 
 import java.io.Serializable;
 
@@ -9,9 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.gt.toolbox.spb.webapps.commons.infra.datamodel.EntityLazyDataModel;
+
 import org.primefaces.model.LazyDataModel;
 
-import com.gt.vacio.web.infra.model.EntityLazyDataModel;
 import com.gt.vacio.web.model.sistema.AppParam;
 import com.gt.vacio.web.service.sistema.AppParamService;
 

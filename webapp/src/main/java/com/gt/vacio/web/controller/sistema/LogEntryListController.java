@@ -13,7 +13,7 @@ import javax.inject.Named;
 
 import org.primefaces.model.LazyDataModel;
 
-import com.gt.vacio.web.infra.model.EntityLazyDataModel;
+import com.gt.toolbox.spb.webapps.commons.infra.datamodel.EntityLazyDataModel;
 import com.gt.vacio.web.model.usuarios.LogEntry;
 import com.gt.vacio.web.service.sistema.LogEntryService;
 

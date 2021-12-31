@@ -14,9 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWithIntegerId;
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWithObservaciones;
 import com.gt.vacio.web.model.CodigoNombre;
-import com.gt.vacio.web.model.IWithIntegerId;
-import com.gt.vacio.web.model.IWithObservaciones;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

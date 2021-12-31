@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.gt.vacio.web.infra.model.LazyDMFiller;
+import com.gt.toolbox.spb.webapps.commons.infra.datamodel.LazyDMFiller;
 import com.gt.vacio.web.model.sistema.AppParam;
 import com.gt.vacio.web.repo.sistema.AppParamRepo;
 import com.gt.vacio.web.service.QueryHelper;

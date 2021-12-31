@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gt.vacio.web.infra.model.LazyDMFiller;
+import com.gt.toolbox.spb.webapps.commons.infra.datamodel.LazyDMFiller;
 import com.gt.vacio.web.model.usuarios.Usuario;
 import com.gt.vacio.web.repo.sistema.UsuarioRepo;
 import com.gt.vacio.web.service.QueryHelper;

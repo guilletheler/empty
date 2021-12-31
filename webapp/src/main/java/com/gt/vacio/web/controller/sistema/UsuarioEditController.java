@@ -1,7 +1,7 @@
 package com.gt.vacio.web.controller.sistema;
 
 import static com.github.adminfaces.template.util.Assert.has;
-import static com.gt.vacio.web.util.Utils.addDetailMessage;
+import static com.gt.toolbox.spb.webapps.commons.infra.utils.Utils.addDetailMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,7 +25,7 @@ import com.gt.vacio.web.dto.ClaveValorDto;
 import com.gt.vacio.web.model.usuarios.UserRol;
 import com.gt.vacio.web.model.usuarios.Usuario;
 import com.gt.vacio.web.service.sistema.UsuarioService;
-import com.gt.vacio.web.util.Utils;
+import com.gt.toolbox.spb.webapps.commons.infra.utils.Utils;
 
 import lombok.Getter;
 import lombok.Setter;

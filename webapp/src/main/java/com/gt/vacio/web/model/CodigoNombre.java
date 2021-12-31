@@ -10,6 +10,9 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.gt.toolbox.spb.webapps.commons.infra.model.IWIthCodNombreInteger;
+import com.gt.toolbox.spb.webapps.commons.infra.model.Populable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +27,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class CodigoNombre implements IWithCodNombreInteger, Populable {
+public abstract class CodigoNombre implements IWIthCodNombreInteger, Populable {
 
 	@NotNull(message = "El código no puede ser nulo")
 	@PositiveOrZero(message = "El código debe ser un valor positivo")

@@ -56,23 +56,6 @@ public class MySimpleUrlAuthenticationSuccessHandler
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
-//	protected String determineTargetUrl(final Authentication authentication) {
-//
-//	    Map<String, String> roleTargetUrlMap = new HashMap<>();
-//	    roleTargetUrlMap.put("ROLE_USER", "/homepage.html");
-//	    roleTargetUrlMap.put("ROLE_ADMIN", "/console.html");
-//
-//	    final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//	    for (final GrantedAuthority grantedAuthority : authorities) {
-//	        String authorityName = grantedAuthority.getAuthority();
-//	        if(roleTargetUrlMap.containsKey(authorityName)) {
-//	            return roleTargetUrlMap.get(authorityName);
-//	        }
-//	    }
-//
-//	    throw new IllegalStateException();
-//	}
-
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
